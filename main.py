@@ -7,8 +7,8 @@ import json
 
 class GeneratorOfAbonents:
 
-    def __init__(self, mcc = '250', mnc = '07', prefix_number = '7911', full_len_of_number = 11, realm = 'ims.protei.ru',
-                 number_of_abonents = 1000):
+    def __init__(self, mcc='250', mnc='07', prefix_number='7911', full_len_of_number=11, realm='ims.protei.ru',
+                 number_of_abonents=1000):
         self._generated_csv = './csv_files/generated/'
         self._generated_json = './json_files/generated/'
         if not os.path.exists(self._generated_csv): os.makedirs(self._generated_csv)
@@ -28,20 +28,20 @@ class GeneratorOfAbonents:
         self.len_generic_number = full_len_of_number - len(self.prefix_number)
 
     def check_validate_args (self, mcc, mnc, len_msin, len_generic_number):  # Почему нельзя сделать self для всех аргументов?
-        if len(mcc) != 3 :
-            print ('MCC содержит некорректное число символов. Должно быть 3 цифры')
+        if len(mcc) != 3:
+            print('MCC содержит некорректное число символов. Должно быть 3 цифры')
             sys.exit()
-        if  2 > len(mnc) > 3 or len(mnc) < 2:
-            print ('MNC содержит некорректное число символов. Должно быть 2 или 3 цифры')
+        if 2 > len(mnc) > 3 or len(mnc) < 2:
+            print('MNC содержит некорректное число символов. Должно быть 2 или 3 цифры')
             sys.exit()
         if self.len_msin < self.len_generic_number:
-            print ('Слишком много абонентов для генерации. Длины MSIN не хватает')
+            print('Слишком много абонентов для генерации. Длины MSIN не хватает')
             sys.exit()
         print('Параметры для генератора валидны')
         return None
 
     def generate_csv_file(self, mcc: str = '250', mnc: str = '07', prefix_number: str = '7911', full_len_of_number: int = 11,
-                          realm: str = 'ims.protei.ru', output_file_name_csv = None):
+                          realm: str = 'ims.protei.ru', output_file_name_csv=None):
         self.calculate_len_msin(mcc, mnc)
         self.calculate_len_generic_number(full_len_of_number)
         self.check_validate_args(mcc, mnc, full_len_of_number, self.len_msin)
@@ -69,7 +69,7 @@ class GeneratorOfAbonents:
         self.dict_of_abon["realm"] = realm
 
     def generate_json_file(self, mcc: str = '250', mnc: str = '07', prefix_number: str = '7911', full_len_of_number: int = 11,
-                          realm: str = 'ims.protei.ru', output_file_name_json = None):
+                          realm: str = 'ims.protei.ru', output_file_name_json=None):
         self.calculate_len_msin(mcc, mnc)
         self.calculate_len_generic_number(full_len_of_number)
         self.check_validate_args(mcc, mnc, full_len_of_number, self.len_msin)
