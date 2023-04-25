@@ -27,7 +27,7 @@ class GeneratorOfAbonents:
     def calculate_len_generic_number(self,full_len_of_number):
         self.len_generic_number = full_len_of_number - len(self.prefix_number)
 
-    def check_validate_args (self, mcc, mnc, len_msin, len_generic_number):  # Почему нельзя сделать self для всех аргументов?
+    def check_validate_args (self, mcc, mnc, len_msin, len_generic_number, prefix_number, full_len_of_number, number_of_abonents):  # Почему нельзя сделать self для всех аргументов?
         if len(mcc) != 3:
             print('MCC содержит некорректное число символов. Должно быть 3 цифры')
             sys.exit()
@@ -36,6 +36,12 @@ class GeneratorOfAbonents:
             sys.exit()
         if self.len_msin < self.len_generic_number:
             print('Слишком много абонентов для генерации. Длины MSIN не хватает')
+            sys.exit()
+        if prefix_number >= full_len_of_number:
+            print('Префикс не может быть равен или быть длиннее самого номера')
+            sys.exit()
+        if self.len_generic_number < number_of_abonents:
+            print('Слишком много абонентов для генерации. Длины генерируемого номера не хватает для заданного числа абонентов')
             sys.exit()
         print('Параметры для генератора валидны')
         return None
