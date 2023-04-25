@@ -7,8 +7,7 @@ import json
 
 class GeneratorOfAbonents:
 
-    def __init__(self, mcc='250', mnc='07', prefix_number='7911', full_len_of_number=11, realm='ims.protei.ru',
-                 number_of_abonents=1000):
+    def __init__(self):
         self._generated_csv = './csv_files/generated/'
         self._generated_json = './json_files/generated/'
         if not os.path.exists(self._generated_csv): os.makedirs(self._generated_csv)
