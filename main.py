@@ -87,11 +87,42 @@ class GeneratorOfAbonents:
             json.dump(dictionary_abonents, json_file)
         return output_file_json
 
+    def generate_csv_and_json_file(self, mcc: str = '250', mnc: str = '07', prefix_number: str = '7911', full_len_of_number: int = 11,
+                          realm: str = 'ims.protei.ru', number_of_abonents:int = 1000,  output_file_name_csv=None,  output_file_name_json=None):
+        self.__calculate_len_msin(mcc, mnc)
+        self.__calculate_len_generic_number(full_len_of_number)
+        self.__check_validate_args(mcc, mnc, prefix_number, full_len_of_number, number_of_abonents)
+        if output_file_name_csv is None:
+            output_file_name_csv = str(random.randrange(0, 1000000000000, 1)) + '.csv'
+        output_file_csv = self._generated_csv + output_file_name_csv
+        if output_file_name_json is None:
+            output_file_name_json = str(random.randrange(0, 1000000000000, 1)) + '.json'
+        output_file_json = self._generated_json + output_file_name_json
+        dictionary_abonents = dict()
+        with open(output_file_csv, mode='w') as csv_file:
+            abonents_csv_writer = csv.writer(csv_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            for serial_number in range(1, number_of_abonents + 1):
+                # описываем параметры для абонента и вносим в словарь
+                self.__discription_of_specific_abonent(serial_number, mcc, mnc, realm)
+                dictionary_abonents[serial_number] = self.dict_of_abon
+                #собираем IMPI
+                generate_MSIN = str(serial_number).zfill(self.len_msin)
+                IMPI = str(mcc + mnc + generate_MSIN)
+                #собираем номер абонента
+                generate_number = str(serial_number).zfill(self.len_generic_number)
+                userpart = str(prefix_number + generate_number)
+                #записываем все в одну строку csv
+                abonents_csv_writer.writerow([IMPI, userpart, realm])
+        with open(output_file_json, mode='w') as json_file:
+            json.dump(dictionary_abonents, json_file)
+        return output_file_csv, output_file_json
+
 
 if __name__ == "__main__":
     list_abonents = GeneratorOfAbonents()
-    list_abonents.generate_csv_file()
-    list_abonents.generate_json_file()
+#    list_abonents.generate_csv_file()
+#    list_abonents.generate_json_file()
+    list_abonents.generate_csv_and_json_file()
 
 
 
