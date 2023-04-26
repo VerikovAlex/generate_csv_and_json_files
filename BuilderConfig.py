@@ -90,13 +90,10 @@ class Builder:
                 json.dump(result, f)
 
         if filename_csv and filename_json:
-            print(filename_csv, filename_json)
             return filename_csv, filename_json
         if filename_csv:
-            print(filename_csv)
             return filename_csv
         else:
-            print(filename_json)
             return filename_json
 
     # Метод, вызывающий генерирование абонентов и заполняющий только json
