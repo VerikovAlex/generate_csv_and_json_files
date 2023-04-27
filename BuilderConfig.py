@@ -51,7 +51,7 @@ class Builder:
 # Метод генерирования профиля абонента, получаем для конкретного абонента словарь с описанием его профиля
     @staticmethod
     def __generate_abonent(serial_number, config: BuilderConfig) -> Tuple[str, Dict]:
-        r = {'servername':None, 'capability':None}
+        r = {'servername': None, 'capability': None}
         phone_number = str(
             config.prefix_number + str(serial_number).zfill(config.full_len_of_number - len(config.prefix_number)))
         r['IMPI'] = str(
@@ -60,12 +60,6 @@ class Builder:
         r['capability'] = config.capability if random.random() < config.probability_capability else None
         if not r['capability']:
             r['servername'] = config.server_name
-        # if random.random() < config.probability_capability:
-        #     r['capability'] = config.capability
-        #     r['servername'] = None
-        # else:
-        #     r['capability'] = None
-        #     r['servername'] = config.server_name
         return phone_number, r
 
 
