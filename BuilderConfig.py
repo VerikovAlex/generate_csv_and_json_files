@@ -57,10 +57,18 @@ class Builder:
         r['IMPI'] = str(
             config.mcc + config.mnc + str(serial_number).zfill(15 - len(config.mcc) - len(config.mnc)))
         r['realm'] = config.realm
-        r['capability'] = config.capability if random.random() < config.probability_capability else None
-        if not r['capability']:
+        # r['capability'] = config.capability if random.random() < config.probability_capability else None
+        # if not r['capability']:
+        #     r['servername'] = config.server_name
+        if random.random() < config.probability_capability:
+            r['capability'] = config.capability
+            r['servername'] = None
+        else:
+            r['capability'] = None
             r['servername'] = config.server_name
         return phone_number, r
+
+
 
 # Метод, вызывающий генерирование абонентов и заполняющий csv и json файлы с ними
     @staticmethod
